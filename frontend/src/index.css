@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 222 18% 11%;
+    --primary: 60 90% 60%; /* Vibrant Lime/Yellow */
+    --primary-foreground: 222 18% 11%;
+    --surface: 0 0% 100%;
+    --surface-foreground: 222 18% 11%;
+    --border: 214 31.8% 91.4%;
+  }
+
+  .dark {
+    --background: 222 18% 11%; /* Dark Slate #1A1D24 */
+    --foreground: 210 40% 98%;
+    --primary: 60 90% 60%; /* Vibrant Lime/Yellow #E4EC5E */
+    --primary-foreground: 222 18% 11%;
+    --surface: 222 18% 14%; /* Sidebar/Card surface #1E222A */
+    --surface-foreground: 210 40% 98%;
+    --border: 222 18% 22%;
+    color-scheme: dark;
+  }
+}
+
+body {
+  @apply bg-background text-foreground transition-colors duration-300;
+}
+
+select {
+  @apply appearance-none bg-background text-foreground;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23888888' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25em 1.25em;
+  padding-right: 2.5rem;
+}
+
+select option {
+  @apply bg-background text-foreground;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
