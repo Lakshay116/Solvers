@@ -16,14 +16,19 @@ setupSocket(server);
 
 const startServer = async () => {
   try {
-    // Check database connection
-    const client = await pool.connect();
-    client.release();
-    console.log('Database connection verified.');
-
-    server.listen(PORT, () => {
+    server.listen(PORT, '0.0.0.0', () => {
       console.log(`Server running on port ${PORT}`);
     });
+
+    // Check database connection after server is listening
+    try {
+      const client = await pool.connect();
+      client.release();
+      console.log('Database connection verified.');
+    } catch (dbErr) {
+      console.error('Failed to connect to database. Please check your environment variables in Back4App:', dbErr.message);
+      // We don't exit here so the container stays alive for healthchecks, but API calls might fail.
+    }
     
     // Graceful shutdown to fix EADDRINUSE with nodemon on Windows
     const shutdown = () => {
