@@ -10,7 +10,7 @@ RUN npm run build
 FROM node:22-alpine
 WORKDIR /app/backend
 COPY backend/package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copy backend source code
 COPY backend/ ./
