@@ -213,9 +213,11 @@ const TicketsList = () => {
                         <span className="hidden sm:inline text-[10px] text-foreground/40 font-medium shrink-0">Created by</span>
                         <div className="flex items-center gap-1.5 min-w-0 bg-background/50 border border-border/50 rounded-full pr-2.5 p-0.5 shadow-sm">
                           <div className="w-4 h-4 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                            <span className="text-[8px] font-bold">{ticket.user_name?.charAt(0) || 'U'}</span>
+                            <span className="text-[8px] font-bold">{ticket.user_id === user?.id ? 'Y' : (ticket.user_name?.charAt(0) || 'U')}</span>
                           </div>
-                          <span className="truncate max-w-[70px] font-medium text-foreground/80 text-[10px] sm:text-[11px]">{ticket.user_name?.split(' ')[0] || 'User'}</span>
+                          <span className="truncate max-w-[70px] font-medium text-foreground/80 text-[10px] sm:text-[11px]">
+                            {ticket.user_id === user?.id ? 'You' : (ticket.user_name?.split(' ')[0] || 'User')}
+                          </span>
                         </div>
                       </div>
                       
@@ -224,9 +226,11 @@ const TicketsList = () => {
                         {ticket.agent_name ? (
                           <div className="flex items-center gap-1.5 min-w-0 bg-background/50 border border-border/50 rounded-full pr-2.5 p-0.5 shadow-sm">
                             <div className="w-4 h-4 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
-                              <span className="text-[8px] font-bold">{ticket.agent_name.charAt(0)}</span>
+                              <span className="text-[8px] font-bold">{ticket.agent_id === user?.id ? 'Y' : ticket.agent_name.charAt(0)}</span>
                             </div>
-                            <span className="text-foreground/90 font-semibold truncate max-w-[70px] text-[10px] sm:text-[11px]">{ticket.agent_name.split(' ')[0]}</span>
+                            <span className="text-foreground/90 font-semibold truncate max-w-[70px] text-[10px] sm:text-[11px]">
+                              {ticket.agent_id === user?.id ? 'You' : ticket.agent_name.split(' ')[0]}
+                            </span>
                           </div>
                         ) : (
                           <span className="text-[9px] sm:text-[10px] text-foreground/40 font-bold bg-background border border-border px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">Unassigned</span>
