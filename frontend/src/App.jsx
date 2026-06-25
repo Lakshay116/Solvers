@@ -17,7 +17,7 @@ import Landing from './pages/Landing';
 
 const ProtectedRoute = ({ children }) => {
   const { token, user } = useAuthStore();
-  if (!token || !user) return <Navigate to="/auth" replace />;
+  if (!token || !user) return <Navigate to="/" replace />;
   return children;
 };
 
