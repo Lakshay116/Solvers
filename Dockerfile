@@ -22,4 +22,4 @@ COPY --from=frontend-builder /app/frontend/dist /app/frontend/dist
 EXPOSE 5000
 ENV NODE_ENV=production
 
-CMD ["npm", "start"]
+CMD ["node", "src/index.js"]
