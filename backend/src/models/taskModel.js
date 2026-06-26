@@ -22,14 +22,15 @@ export const getTasksByProject = async (projectId) => {
   return result.rows;
 };
 
-export const getTaskById = async (id) => {
+export const getTaskById = async (id, organizationId) => {
   const result = await pool.query(
     `SELECT t.*, u1.name as creator_name, u2.name as assignee_name 
      FROM tasks t 
      LEFT JOIN users u1 ON t.created_by = u1.id 
      LEFT JOIN users u2 ON t.assigned_to = u2.id 
-     WHERE t.id = $1`,
-    [id]
+     JOIN projects p ON t.project_id = p.id
+     WHERE t.id = $1 AND p.organization_id = $2`,
+    [id, organizationId]
   );
   return result.rows[0];
 };

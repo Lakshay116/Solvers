@@ -14,6 +14,11 @@ export const createTask = async (req, res, next) => {
       return res.status(400).json({ error: { message: 'Title and project_id are required' } });
     }
 
+    const project = await projectModel.getProjectById(project_id, req.user.organization_id);
+    if (!project) {
+      return res.status(404).json({ error: { message: 'Project not found' } });
+    }
+
     const task = await taskModel.createTask(title, description, project_id, createdBy, assigned_to, priority, due_date);
     
     // Log creation in timeline
@@ -23,7 +28,7 @@ export const createTask = async (req, res, next) => {
     );
     
     if (assigned_to && assigned_to !== createdBy) {
-      const project = await projectModel.getProjectById(project_id);
+      // project is already fetched above
       const assigner = await userModel.getUserById(createdBy);
       await notificationModel.createNotification(
         assigned_to,
@@ -49,6 +54,12 @@ export const createTask = async (req, res, next) => {
 export const getTasksByProject = async (req, res, next) => {
   try {
     const { projectId } = req.params;
+    
+    const project = await projectModel.getProjectById(projectId, req.user.organization_id);
+    if (!project) {
+      return res.status(404).json({ error: { message: 'Project not found' } });
+    }
+
     const tasks = await taskModel.getTasksByProject(projectId);
     res.status(200).json({ tasks });
   } catch (error) {
@@ -59,7 +70,7 @@ export const getTasksByProject = async (req, res, next) => {
 export const getTaskById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const task = await taskModel.getTaskById(id);
+    const task = await taskModel.getTaskById(id, req.user.organization_id);
     
     if (!task) {
       return res.status(404).json({ error: { message: 'Task not found' } });
@@ -76,7 +87,7 @@ export const updateTask = async (req, res, next) => {
     const { id } = req.params;
     const { title, description, assigned_to, status, priority, due_date } = req.body;
 
-    const task = await taskModel.getTaskById(id);
+    const task = await taskModel.getTaskById(id, req.user.organization_id);
     if (!task) {
       return res.status(404).json({ error: { message: 'Task not found' } });
     }
@@ -108,7 +119,7 @@ export const updateTask = async (req, res, next) => {
 
     if (assigned_to && assigned_to !== task.assigned_to && assigned_to !== req.user.id) {
       console.log(`[DEBUG] Firing notification for assignment. assigned_to: ${assigned_to}, prev: ${task.assigned_to}`);
-      const project = await projectModel.getProjectById(task.project_id);
+      const project = await projectModel.getProjectById(task.project_id, req.user.organization_id);
       await notificationModel.createNotification(
         assigned_to,
         'Task Reassigned',
@@ -134,7 +145,7 @@ export const deleteTask = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const task = await taskModel.getTaskById(id);
+    const task = await taskModel.getTaskById(id, req.user.organization_id);
     if (!task) {
       return res.status(404).json({ error: { message: 'Task not found' } });
     }
@@ -154,6 +165,12 @@ export const deleteTask = async (req, res, next) => {
 export const getTaskTimeline = async (req, res, next) => {
   try {
     const { id } = req.params;
+
+    const task = await taskModel.getTaskById(id, req.user.organization_id);
+    if (!task) {
+      return res.status(404).json({ error: { message: 'Task not found' } });
+    }
+
     const { rows } = await pool.query(
       `SELECT t.*, u.name as user_name, r.name as user_role 
        FROM task_timeline t 

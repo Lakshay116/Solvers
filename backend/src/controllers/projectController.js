@@ -9,7 +9,7 @@ export const createProject = async (req, res, next) => {
       return res.status(400).json({ error: { message: 'Project name is required' } });
     }
 
-    const project = await projectModel.createProject(name, description, ownerId, department, project_type);
+    const project = await projectModel.createProject(name, description, ownerId, department, project_type, req.user.organization_id);
     res.status(201).json({ message: 'Project created', project });
   } catch (error) {
     next(error);
@@ -18,7 +18,7 @@ export const createProject = async (req, res, next) => {
 
 export const getProjects = async (req, res, next) => {
   try {
-    const projects = await projectModel.getAllProjects(req.user.id, req.user.role);
+    const projects = await projectModel.getAllProjects(req.user.id, req.user.role, req.user.organization_id);
     res.status(200).json({ projects });
   } catch (error) {
     next(error);
@@ -28,7 +28,7 @@ export const getProjects = async (req, res, next) => {
 export const getProjectById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const project = await projectModel.getProjectById(id);
+    const project = await projectModel.getProjectById(id, req.user.organization_id);
     
     if (!project) {
       return res.status(404).json({ error: { message: 'Project not found' } });
@@ -45,7 +45,7 @@ export const updateProject = async (req, res, next) => {
     const { id } = req.params;
     const { name, description, department, project_type } = req.body;
 
-    const project = await projectModel.getProjectById(id);
+    const project = await projectModel.getProjectById(id, req.user.organization_id);
     if (!project) {
       return res.status(404).json({ error: { message: 'Project not found' } });
     }
@@ -55,7 +55,7 @@ export const updateProject = async (req, res, next) => {
       return res.status(403).json({ error: { message: 'Not authorized to update this project' } });
     }
 
-    const updatedProject = await projectModel.updateProject(id, name, description, department, project_type);
+    const updatedProject = await projectModel.updateProject(id, name, description, department, project_type, req.user.organization_id);
     res.status(200).json({ message: 'Project updated', project: updatedProject });
   } catch (error) {
     next(error);
@@ -66,7 +66,7 @@ export const deleteProject = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const project = await projectModel.getProjectById(id);
+    const project = await projectModel.getProjectById(id, req.user.organization_id);
     if (!project) {
       return res.status(404).json({ error: { message: 'Project not found' } });
     }
@@ -76,7 +76,7 @@ export const deleteProject = async (req, res, next) => {
       return res.status(403).json({ error: { message: 'Not authorized to delete this project' } });
     }
 
-    await projectModel.deleteProject(id);
+    await projectModel.deleteProject(id, req.user.organization_id);
     res.status(200).json({ message: 'Project deleted successfully' });
   } catch (error) {
     next(error);
