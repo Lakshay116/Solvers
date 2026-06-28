@@ -14,6 +14,7 @@ import TicketsList from './pages/TicketsList';
 import TicketChat from './pages/TicketChat';
 import Users from './pages/Users';
 import Landing from './pages/Landing';
+import AIAssistant from './pages/AIAssistant';
 
 const ProtectedRoute = ({ children }) => {
   const { token, user } = useAuthStore();
@@ -55,6 +56,7 @@ const App = () => {
           }
         >
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/ai-assistant" element={<AIAssistant />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:projectId" element={<ProjectDetails />} />
           <Route path="/tickets" element={<TicketsList />} />

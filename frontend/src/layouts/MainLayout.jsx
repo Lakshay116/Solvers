@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, MessageSquare, LogOut, Sun, Moon, FolderKanban, Layers, ChevronLeft, UserCircle, Shield, Bell, Menu, X } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, LogOut, Sun, Moon, FolderKanban, Layers, ChevronLeft, UserCircle, Shield, Bell, Menu, X, Sparkles } from 'lucide-react';
 import useThemeStore from '../store/themeStore';
 import { useAuthStore } from '../store/authStore';
 import { useTicketStore } from '../store/ticketStore';
@@ -281,6 +281,19 @@ const MainLayout = () => {
             >
               <LayoutDashboard className="w-5 h-5 flex-shrink-0" />
               {!isCollapsed && <span className="whitespace-nowrap">Overview</span>}
+            </Link>
+
+            <Link 
+              to="/ai-assistant"
+              className={`flex items-center gap-3 py-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0' : 'px-4'} ${
+                location.pathname.startsWith('/ai-assistant')
+                ? 'bg-[#2A2F3A] text-primary' 
+                : 'text-slate-400 hover:bg-[#2A2F3A]/50 hover:text-slate-200'
+              }`}
+              title="SolversAI"
+            >
+              <Sparkles className="w-5 h-5 flex-shrink-0 text-primary animate-pulse" />
+              {!isCollapsed && <span className="whitespace-nowrap font-semibold">SolversAI</span>}
             </Link>
           </div>
 
