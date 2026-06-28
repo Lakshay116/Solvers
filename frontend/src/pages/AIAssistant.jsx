@@ -268,7 +268,7 @@ const AIAssistant = () => {
                         deleteSession(s.id);
                         toast.success('Chat deleted.');
                       }}
-                      className="opacity-0 group-hover:opacity-100 p-0.5 hover:text-rose-400 rounded transition-opacity"
+                      className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 p-0.5 hover:text-rose-400 rounded transition-opacity"
                       title="Delete chat"
                     >
                       <Trash2 className="w-3 h-3" />
