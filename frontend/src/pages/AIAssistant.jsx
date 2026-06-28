@@ -122,7 +122,7 @@ const AIAssistant = () => {
   const { tickets, fetchTickets } = useTicketStore();
   const [inputText, setInputText] = useState('');
   const [selectedTicketId, setSelectedTicketId] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
   const chatEndRef = useRef(null);
 
   const formatTime = (isoString) => {
@@ -178,11 +178,13 @@ const AIAssistant = () => {
     } else {
       await sendMessage(null, actionType);
     }
+    if (window.innerWidth < 1024) setIsSidebarOpen(false);
   };
 
   const handleChipClick = async (prompt) => {
     if (isLoading) return;
     await sendMessage(prompt);
+    if (window.innerWidth < 1024) setIsSidebarOpen(false);
   };
 
   const handleClearHistory = () => {
@@ -200,9 +202,26 @@ const AIAssistant = () => {
   ];
 
   return (
-    <div className="flex flex-col lg:flex-row h-full overflow-hidden bg-background">
+    <div className="flex flex-col lg:flex-row h-full overflow-hidden bg-background relative">
+      {/* Backdrop for mobile layout */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden transition-opacity duration-300"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Left Sidebar - Config & Quick Actions */}
-      <div className={`border-b lg:border-b-0 lg:border-r border-border bg-[#1A1D24] overflow-y-auto custom-scrollbar flex flex-col gap-5 transition-all duration-300 ${isSidebarOpen ? 'w-full lg:w-80 p-5 opacity-100' : 'w-0 h-0 lg:h-full lg:w-0 overflow-hidden p-0 border-r-0 opacity-0'}`}>
+      <div className={`
+        fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto
+        w-72 lg:w-80 h-full bg-[#1A1D24] border-r border-border
+        overflow-y-auto custom-scrollbar flex flex-col gap-5 p-5
+        transition-all duration-300 ease-in-out
+        ${isSidebarOpen 
+          ? 'translate-x-0 opacity-100' 
+          : '-translate-x-full lg:translate-x-0 lg:w-0 lg:p-0 lg:border-r-0 lg:opacity-0 overflow-hidden'
+        }
+      `}>
         {/* Header combined with Status */}
         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
           <div className="flex items-center gap-2">
@@ -234,7 +253,10 @@ const AIAssistant = () => {
                         ? 'bg-[#242A35] text-primary border-l-2 border-primary border-t-transparent border-r-transparent border-b-transparent pl-2.5 shadow-inner' 
                         : 'text-slate-400 bg-transparent hover:bg-[#242A35]/30 hover:text-slate-200 border-l-2 border-transparent pl-2.5 border-t-transparent border-r-transparent border-b-transparent'
                     }`}
-                    onClick={() => switchSession(s.id)}
+                    onClick={() => {
+                      switchSession(s.id);
+                      if (window.innerWidth < 1024) setIsSidebarOpen(false);
+                    }}
                   >
                     <div className="flex items-center gap-2 truncate pr-2">
                       <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 text-slate-500 group-hover:text-slate-350" />
@@ -451,7 +473,7 @@ const AIAssistant = () => {
         {/* Bottom Panel (Chips & Input) */}
         <div className="p-4 border-t border-border bg-[#181B21] flex flex-col gap-3">
           {/* Action Chips */}
-          <div className="flex flex-wrap gap-2">
+          <div className="hidden lg:flex flex-wrap gap-2">
             {chips.map((chip, idx) => (
               <button
                 key={idx}
