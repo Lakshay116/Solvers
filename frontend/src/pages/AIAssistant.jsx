@@ -211,15 +211,14 @@ const AIAssistant = () => {
         />
       )}
 
-      {/* Left Sidebar - Config & Quick Actions */}
       <div className={`
         fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto
-        w-72 lg:w-80 h-full bg-[#1A1D24] border-r border-border
-        overflow-y-auto custom-scrollbar flex flex-col gap-5 p-5
+        h-full bg-[#1A1D24] border-border
+        overflow-y-auto custom-scrollbar flex flex-col gap-5
         transition-all duration-300 ease-in-out
         ${isSidebarOpen 
-          ? 'translate-x-0 opacity-100' 
-          : '-translate-x-full lg:translate-x-0 lg:w-0 lg:p-0 lg:border-r-0 lg:opacity-0 overflow-hidden'
+          ? 'w-72 lg:w-80 p-5 border-r translate-x-0 opacity-100' 
+          : '-translate-x-full lg:translate-x-0 w-72 lg:w-0 p-5 lg:p-0 border-r-0 lg:opacity-0 overflow-hidden'
         }
       `}>
         {/* Header combined with Status */}
