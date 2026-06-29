@@ -87,7 +87,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex-1 overflow-y-auto bg-[#08090A]">
+    <div className="flex-1 overflow-y-auto bg-background">
       {/* Hero Section */}
       <div className="relative px-6 sm:px-10 py-6 sm:py-8 border-b border-border bg-gradient-to-b from-primary/5 to-transparent overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
@@ -96,7 +96,7 @@ const Dashboard = () => {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider mb-4 shadow-sm backdrop-blur-md">
               <Zap className="w-3.5 h-3.5" /> Welcome back, {getDisplayName()}
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold mb-3 tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-extrabold mb-3 tracking-tight text-slate-900 dark:text-white leading-tight">
               Dashboard Overview
             </h1>
             <p className="text-base text-foreground/60 max-w-2xl leading-relaxed">
@@ -249,7 +249,7 @@ const Dashboard = () => {
             <FadeIn delay={0.6} className="mt-6">
                <div className="p-6 rounded-3xl bg-gradient-to-r from-purple-500/10 to-indigo-500/10 border border-purple-500/20 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
                  <div>
-                   <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                   <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                      <Shield className="w-5 h-5 text-purple-400" /> Admin Access Actions
                    </h3>
                    <p className="text-foreground/60 text-sm mt-1">You have full administrative privileges to manage users and access roles.</p>

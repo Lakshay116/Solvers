@@ -65,11 +65,11 @@ const MainLayout = () => {
     <div className="flex flex-col md:flex-row h-screen bg-background overflow-hidden selection:bg-primary/30 text-foreground relative">
       
       {/* Mobile Header */}
-      <div className="md:hidden flex items-center justify-between p-4 border-b border-border bg-[#181B21] z-30">
+      <div className="md:hidden flex items-center justify-between p-4 border-b border-slate-200 dark:border-border bg-slate-50 dark:bg-[#181B21] z-30">
         <div className="flex items-center gap-2 flex-1 min-w-0 pr-4">
           <Layers className="w-6 h-6 text-primary flex-shrink-0" />
           <div className="flex flex-col flex-1 min-w-0">
-            <span className="text-xl font-bold tracking-tight text-white leading-none">Solvers</span>
+            <span className="text-xl font-bold tracking-tight text-slate-800 dark:text-white leading-none">Solvers</span>
             {user?.organization_name && (
               <div className="flex flex-row items-center gap-1 mt-1 w-full">
                 <span className="text-[10px] font-medium text-foreground/40 italic leading-none flex-shrink-0">for</span>
@@ -151,14 +151,14 @@ const MainLayout = () => {
       )}
 
       {/* Sidebar */}
-      <aside className={`border-r border-border bg-[#181B21] flex flex-col shadow-2xl z-50 md:z-20 transition-all duration-300 fixed md:relative h-full ${isCollapsed ? 'md:w-20' : 'w-72'} ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
+      <aside className={`border-r border-slate-200 dark:border-border bg-slate-50 dark:bg-[#181B21] flex flex-col shadow-2xl z-50 md:z-20 transition-all duration-300 fixed md:relative h-full ${isCollapsed ? 'md:w-20' : 'w-72'} ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
         <div className={`p-6 flex items-center ${isCollapsed ? 'justify-center flex-col gap-4' : 'gap-3'}`}>
           <div className="flex items-center justify-center">
             <Layers className="w-7 h-7 text-primary flex-shrink-0" />
           </div>
           {!isCollapsed && (
             <div className="flex flex-col flex-1 min-w-0">
-              <span className="text-xl font-bold tracking-tight text-white whitespace-nowrap transition-all leading-none">Solvers</span>
+              <span className="text-xl font-bold tracking-tight text-slate-800 dark:text-white whitespace-nowrap transition-all leading-none">Solvers</span>
               {user?.organization_name && (
                 <div className="flex flex-row items-center gap-1 mt-1 w-full">
                   <span className="text-[10px] font-medium text-foreground/40 italic leading-none flex-shrink-0">for</span>
@@ -261,21 +261,21 @@ const MainLayout = () => {
 
             <button 
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className="w-5 h-5 rounded-full bg-primary flex flex-shrink-0 items-center justify-center text-[#181B21] shadow-sm transition-transform duration-300 hidden md:flex ml-1"
+              className="w-5 h-5 rounded-full bg-primary flex flex-shrink-0 items-center justify-center text-primary-foreground shadow-sm transition-transform duration-300 hidden md:flex ml-1"
             >
               <ChevronLeft className={`w-3 h-3 transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`} strokeWidth={3} />
             </button>
           </div>
         </div>
 
-        <div className={`px-3 flex-1 overflow-y-auto custom-scrollbar ${isCollapsed ? 'md:overflow-hidden' : ''}`}>
+        <div className={`px-3 flex-1 overflow-y-auto custom-scrollbar ${isCollapsed ? 'scrollbar-hide' : ''}`}>
           <div className="space-y-1">
             <Link 
               to="/dashboard"
-              className={`flex items-center gap-3 py-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0' : 'px-4'} ${
+              className={`flex items-center gap-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0 py-2.5' : 'px-4 py-3'} ${
                 location.pathname.startsWith('/dashboard')
-                ? 'bg-[#2A2F3A] text-primary' 
-                : 'text-slate-400 hover:bg-[#2A2F3A]/50 hover:text-slate-200'
+                ? 'bg-slate-200/80 dark:bg-[#2A2F3A] text-slate-800 dark:text-primary font-semibold' 
+                : 'text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-[#2A2F3A]/50 hover:text-slate-800 dark:hover:text-slate-200'
               }`}
               title="Overview"
             >
@@ -285,10 +285,10 @@ const MainLayout = () => {
 
             <Link 
               to="/ai-assistant"
-              className={`flex items-center gap-3 py-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0' : 'px-4'} ${
+              className={`flex items-center gap-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0 py-2.5' : 'px-4 py-3'} ${
                 location.pathname.startsWith('/ai-assistant')
-                ? 'bg-[#2A2F3A] text-primary' 
-                : 'text-slate-400 hover:bg-[#2A2F3A]/50 hover:text-slate-200'
+                ? 'bg-slate-200/80 dark:bg-[#2A2F3A] text-slate-800 dark:text-primary font-semibold' 
+                : 'text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-[#2A2F3A]/50 hover:text-slate-800 dark:hover:text-slate-200'
               }`}
               title="SolversAI"
             >
@@ -298,15 +298,15 @@ const MainLayout = () => {
           </div>
 
           {!isCollapsed && <p className="px-4 text-[10px] font-bold text-primary tracking-widest mt-8 mb-3 uppercase whitespace-nowrap">PROJECT MANAGEMENT</p>}
-          {isCollapsed && <div className="h-px bg-slate-700/50 w-8 mx-auto mt-6 mb-4"></div>}
+          {isCollapsed && <div className="h-px bg-slate-700/50 w-8 mx-auto mt-4 mb-3"></div>}
           
           <div className="space-y-1">
             <Link 
               to="/projects"
-              className={`flex items-center gap-3 py-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0' : 'px-4'} ${
+              className={`flex items-center gap-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0 py-2.5' : 'px-4 py-3'} ${
                 location.pathname.startsWith('/projects')
-                ? 'bg-[#2A2F3A] text-primary' 
-                : 'text-slate-400 hover:bg-[#2A2F3A]/50 hover:text-slate-200'
+                ? 'bg-slate-200/80 dark:bg-[#2A2F3A] text-slate-800 dark:text-primary font-semibold' 
+                : 'text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-[#2A2F3A]/50 hover:text-slate-800 dark:hover:text-slate-200'
               }`}
               title="Projects"
             >
@@ -316,15 +316,15 @@ const MainLayout = () => {
           </div>
 
           {!isCollapsed && <p className="px-4 text-[10px] font-bold text-primary tracking-widest mt-8 mb-3 uppercase whitespace-nowrap">TICKETING SYSTEM</p>}
-          {isCollapsed && <div className="h-px bg-slate-700/50 w-8 mx-auto mt-6 mb-4"></div>}
+          {isCollapsed && <div className="h-px bg-slate-700/50 w-8 mx-auto mt-4 mb-3"></div>}
           
           <div className="space-y-1">
             <Link 
               to="/tickets"
-              className={`flex items-center py-3 rounded-lg transition-all font-medium relative ${isCollapsed ? 'justify-center px-0' : 'justify-between px-4'} ${
+              className={`flex items-center rounded-lg transition-all font-medium relative ${isCollapsed ? 'justify-center px-0 py-2.5' : 'justify-between px-4 py-3'} ${
                 location.pathname.startsWith('/tickets')
-                ? 'bg-[#2A2F3A] text-primary' 
-                : 'text-slate-400 hover:bg-[#2A2F3A]/50 hover:text-slate-200'
+                ? 'bg-slate-200/80 dark:bg-[#2A2F3A] text-slate-800 dark:text-primary font-semibold' 
+                : 'text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-[#2A2F3A]/50 hover:text-slate-800 dark:hover:text-slate-200'
               }`}
               title="Tickets"
             >
@@ -350,15 +350,15 @@ const MainLayout = () => {
           {user?.role_name === 'Admin' && (
             <>
               {!isCollapsed && <p className="px-4 text-[10px] font-bold text-primary tracking-widest mt-8 mb-3 uppercase whitespace-nowrap">ADMIN</p>}
-              {isCollapsed && <div className="h-px bg-slate-700/50 w-8 mx-auto mt-6 mb-4"></div>}
+              {isCollapsed && <div className="h-px bg-slate-700/50 w-8 mx-auto mt-4 mb-3"></div>}
               
               <div className="space-y-1">
                 <Link 
                   to="/users"
-                  className={`flex items-center gap-3 py-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0' : 'px-4'} ${
+                  className={`flex items-center gap-3 rounded-lg transition-all font-medium ${isCollapsed ? 'justify-center px-0 py-2.5' : 'px-4 py-3'} ${
                     location.pathname.startsWith('/users')
-                    ? 'bg-[#2A2F3A] text-primary' 
-                    : 'text-slate-400 hover:bg-[#2A2F3A]/50 hover:text-slate-200'
+                    ? 'bg-slate-200/80 dark:bg-[#2A2F3A] text-slate-800 dark:text-primary font-semibold' 
+                    : 'text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-[#2A2F3A]/50 hover:text-slate-800 dark:hover:text-slate-200'
                   }`}
                   title="User Management"
                 >
@@ -372,7 +372,7 @@ const MainLayout = () => {
 
         {/* User Profile Area */}
         <div className="p-3 mt-auto">
-          <div className={`bg-[#242A35] rounded-xl p-3 flex ${isCollapsed ? 'flex-col items-center gap-4' : 'items-center justify-between'} shadow-sm border border-slate-700/50 transition-all`}>
+          <div className={`bg-slate-100 dark:bg-[#242A35] rounded-xl p-3 flex ${isCollapsed ? 'flex-col items-center gap-4' : 'items-center justify-between'} shadow-sm border border-slate-200 dark:border-slate-700/50 transition-all`}>
             <div className={`flex items-center ${isCollapsed ? 'justify-center w-full' : 'gap-3'} overflow-hidden`}>
               {user?.avatar ? (
                 <img src={user.avatar} alt="Avatar" className="w-9 h-9 rounded-lg object-cover flex-shrink-0" />

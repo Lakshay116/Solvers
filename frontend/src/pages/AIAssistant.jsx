@@ -39,7 +39,7 @@ const MarkdownText = ({ text }) => {
         const renderListBuffer = (key) => {
           if (listBuffer.length > 0) {
             const el = (
-              <ul key={`list-${key}`} className="list-disc pl-5 space-y-1 my-1.5 text-slate-300 text-xs animate-in fade-in-50">
+              <ul key={`list-${key}`} className="list-disc pl-5 space-y-1 my-1.5 text-slate-700 dark:text-slate-300 text-xs animate-in fade-in-50">
                 {listBuffer.map((item, i) => <li key={i}>{parseInline(item)}</li>)}
               </ul>
             );
@@ -53,12 +53,12 @@ const MarkdownText = ({ text }) => {
           const boldParts = str.split(/(\*\*.*?\*\*)/g);
           return boldParts.map((bp, i) => {
             if (bp.startsWith('**') && bp.endsWith('**')) {
-              return <strong key={i} className="font-bold text-slate-100">{bp.slice(2, -2)}</strong>;
+              return <strong key={i} className="font-bold text-slate-900 dark:text-slate-100">{bp.slice(2, -2)}</strong>;
             }
             const codeParts = bp.split(/(`.*?`)/g);
             return codeParts.map((cp, j) => {
               if (cp.startsWith('`') && cp.endsWith('`')) {
-                return <code key={j} className="bg-slate-800/80 px-1.5 py-0.5 rounded text-[11px] text-slate-200 font-mono border border-slate-700/30">{cp.slice(1, -1)}</code>;
+                return <code key={j} className="bg-slate-200/50 dark:bg-slate-800/80 px-1.5 py-0.5 rounded text-[11px] text-slate-800 dark:text-slate-200 font-mono border border-slate-300 dark:border-slate-700/30">{cp.slice(1, -1)}</code>;
               }
               return cp;
             });
@@ -80,19 +80,19 @@ const MarkdownText = ({ text }) => {
           }
 
           if (line.startsWith('### ')) {
-            processedElements.push(<h3 key={i} className="text-xs font-bold text-white mt-3 mb-1">{parseInline(line.slice(4))}</h3>);
+            processedElements.push(<h3 key={i} className="text-xs font-bold text-slate-800 dark:text-white mt-3 mb-1">{parseInline(line.slice(4))}</h3>);
           } else if (line.startsWith('## ')) {
-            processedElements.push(<h2 key={i} className="text-sm font-bold text-white mt-4 mb-2 border-b border-slate-800/60 pb-0.5">{parseInline(line.slice(3))}</h2>);
+            processedElements.push(<h2 key={i} className="text-sm font-bold text-slate-800 dark:text-white mt-4 mb-2 border-b border-slate-200 dark:border-slate-800/60 pb-0.5">{parseInline(line.slice(3))}</h2>);
           } else if (line.startsWith('# ')) {
-            processedElements.push(<h1 key={i} className="text-base font-bold text-white mt-5 mb-2.5">{parseInline(line.slice(2))}</h1>);
+            processedElements.push(<h1 key={i} className="text-base font-bold text-slate-800 dark:text-white mt-5 mb-2.5">{parseInline(line.slice(2))}</h1>);
           } else if (line.startsWith('> ')) {
             processedElements.push(
-              <blockquote key={i} className="border-l-4 border-slate-500 bg-slate-800/40 pl-3 pr-3 py-1.5 my-2.5 rounded-r-lg italic text-slate-300">
+              <blockquote key={i} className="border-l-4 border-slate-500 bg-slate-200/30 dark:bg-slate-800/40 pl-3 pr-3 py-1.5 my-2.5 rounded-r-lg italic text-slate-700 dark:text-slate-300">
                 {parseInline(line.slice(2))}
               </blockquote>
             );
           } else if (line.trim() !== '') {
-            processedElements.push(<p key={i} className="my-1 text-slate-300">{parseInline(line)}</p>);
+            processedElements.push(<p key={i} className="my-1 text-slate-700 dark:text-slate-300">{parseInline(line)}</p>);
           }
         }
 
@@ -213,7 +213,7 @@ const AIAssistant = () => {
 
       <div className={`
         fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto
-        h-full bg-[#1A1D24] border-border
+        h-full bg-slate-50 dark:bg-[#1A1D24] border-slate-200 dark:border-border
         overflow-y-auto custom-scrollbar flex flex-col gap-5
         transition-all duration-300 ease-in-out
         ${isSidebarOpen 
@@ -222,13 +222,13 @@ const AIAssistant = () => {
         }
       `}>
         {/* Header combined with Status */}
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-2">
             <div className="p-1.5 rounded-lg bg-primary/10 text-primary animate-pulse">
               <Brain className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-xs font-bold tracking-tight text-white leading-none mb-0.5">SolversAI</h1>
+              <h1 className="text-xs font-bold tracking-tight text-slate-800 dark:text-white leading-none mb-0.5">SolversAI</h1>
               <div className="flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span className="text-[9px] text-emerald-400 font-semibold tracking-wider">Solvers LLM v2</span>
@@ -249,8 +249,8 @@ const AIAssistant = () => {
                     key={s.id}
                     className={`group flex items-center justify-between rounded-lg px-2.5 py-1.5 text-[11px] font-semibold transition-all cursor-pointer border ${
                       isActive 
-                        ? 'bg-[#242A35] text-primary border-l-2 border-primary border-t-transparent border-r-transparent border-b-transparent pl-2.5 shadow-inner' 
-                        : 'text-slate-400 bg-transparent hover:bg-[#242A35]/30 hover:text-slate-200 border-l-2 border-transparent pl-2.5 border-t-transparent border-r-transparent border-b-transparent'
+                        ? 'bg-slate-200 dark:bg-[#242A35] text-slate-800 dark:text-primary border-l-2 border-primary border-t-transparent border-r-transparent border-b-transparent pl-2.5 shadow-inner' 
+                        : 'text-slate-500 dark:text-slate-400 bg-transparent hover:bg-slate-200/50 dark:hover:bg-[#242A35]/30 hover:text-slate-800 dark:hover:text-slate-200 border-l-2 border-transparent pl-2.5 border-t-transparent border-r-transparent border-b-transparent'
                     }`}
                     onClick={() => {
                       switchSession(s.id);
@@ -289,14 +289,14 @@ const AIAssistant = () => {
             <button
               onClick={() => handleQuickAction('summarize_tasks')}
               disabled={isLoading}
-              className="flex items-center gap-3 p-2 rounded-xl bg-[#242A35]/30 hover:bg-[#2A313E]/50 border border-slate-700/30 hover:border-primary/20 transition-all duration-300 group disabled:opacity-50 text-left"
+              className="flex items-center gap-3 p-2 rounded-xl bg-slate-100/70 hover:bg-slate-200/50 dark:bg-[#242A35]/30 dark:hover:bg-[#2A313E]/50 border border-slate-200 dark:border-slate-700/30 hover:border-primary/20 transition-all duration-300 group disabled:opacity-50 text-left"
             >
               <div className="p-1.5 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-black transition-colors shrink-0">
                 <ClipboardList className="w-3.5 h-3.5" />
               </div>
               <div className="truncate pr-1">
-                <p className="text-[11px] font-bold text-slate-200 group-hover:text-white transition-colors">Summarize Workload</p>
-                <p className="text-[9px] text-slate-450 truncate">Fetch active tasks, deadlines & status.</p>
+                <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Summarize Workload</p>
+                <p className="text-[9px] text-slate-500 dark:text-slate-450 truncate">Fetch active tasks, deadlines & status.</p>
               </div>
             </button>
 
@@ -304,33 +304,33 @@ const AIAssistant = () => {
             <button
               onClick={() => handleQuickAction('analyze_projects')}
               disabled={isLoading}
-              className="flex items-center gap-3 p-2 rounded-xl bg-[#242A35]/30 hover:bg-[#2A313E]/50 border border-slate-700/30 hover:border-primary/20 transition-all duration-300 group disabled:opacity-50 text-left"
+              className="flex items-center gap-3 p-2 rounded-xl bg-slate-100/70 hover:bg-slate-200/50 dark:bg-[#242A35]/30 dark:hover:bg-[#2A313E]/50 border border-slate-200 dark:border-slate-700/30 hover:border-primary/20 transition-all duration-300 group disabled:opacity-50 text-left"
             >
               <div className="p-1.5 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-black transition-colors shrink-0">
                 <Briefcase className="w-3.5 h-3.5" />
               </div>
               <div className="truncate pr-1">
-                <p className="text-[11px] font-bold text-slate-200 group-hover:text-white transition-colors">Project Health Check</p>
-                <p className="text-[9px] text-slate-450 truncate">Inspect project progression & blockages.</p>
+                <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Project Health Check</p>
+                <p className="text-[9px] text-slate-500 dark:text-slate-450 truncate">Inspect project progression & blockages.</p>
               </div>
             </button>
 
             {/* Action 3: Ticket Draft Reply */}
-            <div className="p-2.5 rounded-xl bg-[#242A35]/30 border border-slate-700/30 flex flex-col gap-2">
+            <div className="p-2.5 rounded-xl bg-slate-100/70 dark:bg-[#242A35]/30 border border-slate-200 dark:border-slate-700/30 flex flex-col gap-2">
               <div className="flex items-center gap-3">
                 <div className="p-1.5 rounded-lg bg-primary/10 text-primary shrink-0">
                   <FileText className="w-3.5 h-3.5" />
                 </div>
                 <div className="truncate pr-1">
-                  <p className="text-[11px] font-bold text-slate-200">Draft Support Reply</p>
-                  <p className="text-[9px] text-slate-450 truncate">Generate professional agent replies.</p>
+                  <p className="text-[11px] font-bold text-slate-800 dark:text-slate-200">Draft Support Reply</p>
+                  <p className="text-[9px] text-slate-500 dark:text-slate-450 truncate">Generate professional agent replies.</p>
                 </div>
               </div>
               <div className="flex gap-1.5">
                 <select
                   value={selectedTicketId}
                   onChange={(e) => setSelectedTicketId(e.target.value)}
-                  className="flex-1 bg-[#1A1D24] text-[10px] text-white border border-slate-700/50 rounded-lg px-2 py-1 focus:border-primary focus:outline-none transition-colors"
+                  className="flex-1 bg-white dark:bg-[#1A1D24] text-[10px] text-slate-800 dark:text-white border border-slate-200 dark:border-slate-700/50 rounded-lg px-2 py-1 focus:border-primary focus:outline-none transition-colors"
                 >
                   <option value="">Select ticket...</option>
                   {tickets && tickets.map((t) => (
@@ -342,7 +342,7 @@ const AIAssistant = () => {
                 <button
                   onClick={() => handleQuickAction('draft_ticket_reply')}
                   disabled={isLoading || !selectedTicketId}
-                  className="py-1 px-2.5 rounded-lg bg-primary text-black font-semibold text-[10px] hover:bg-[#d8e050] transition-colors disabled:opacity-50 flex items-center justify-center gap-1 shadow-md shadow-primary/5"
+                  className="py-1 px-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-[10px] hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-1 shadow-md shadow-primary/5"
                 >
                   <Sparkles className="w-3 h-3" />
                   Draft
@@ -353,7 +353,7 @@ const AIAssistant = () => {
         </div>
 
         {/* Clear Chat */}
-        <div className="mt-auto pt-2 border-t border-slate-800 flex justify-center">
+        <div className="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 flex justify-center">
           <button
             onClick={handleClearHistory}
             className="flex items-center gap-1 text-[10px] font-bold text-rose-450/70 hover:text-rose-455 transition-colors py-1"
@@ -365,19 +365,19 @@ const AIAssistant = () => {
       </div>
 
       {/* Main Chat Interface */}
-      <div className="flex-1 flex flex-col h-full relative overflow-hidden">
+      <div className="flex-1 flex flex-col h-full relative overflow-hidden bg-background">
         {/* Chat Window Header */}
-        <div className="border-b border-border bg-[#181B21] px-6 py-3 flex items-center justify-between shrink-0">
+        <div className="border-b border-slate-200 dark:border-border bg-slate-50 dark:bg-[#181B21] px-6 py-3 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-all duration-205"
+              className="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 text-slate-550 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition-all duration-205"
               title={isSidebarOpen ? "Collapse Sidebar" : "Expand Sidebar"}
             >
               {isSidebarOpen ? <PanelLeftClose className="w-4.5 h-4.5" /> : <PanelLeftOpen className="w-4.5 h-4.5" />}
             </button>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-white tracking-tight">SolversAI Chat</span>
+              <span className="text-xs font-bold text-slate-800 dark:text-white tracking-tight">SolversAI Chat</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             </div>
           </div>
@@ -389,7 +389,7 @@ const AIAssistant = () => {
                 toast.success('Started a new conversation.');
               }}
               disabled={isLoading}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-700/50 hover:border-primary/30 bg-[#242A35]/30 hover:bg-[#242A35]/80 text-[10px] font-bold text-slate-300 hover:text-white transition-all duration-200 disabled:opacity-50 shadow-sm"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700/50 hover:border-primary/30 bg-slate-100 hover:bg-slate-200 dark:bg-[#242A35]/30 dark:hover:bg-[#242A35]/80 text-[10px] font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all duration-200 disabled:opacity-50 shadow-sm"
               title="New Chat"
             >
               <Plus className="w-3 h-3" />
@@ -414,7 +414,7 @@ const AIAssistant = () => {
                 <React.Fragment key={index}>
                   {showDateSeparator && (
                     <div className="flex justify-center my-3 select-none">
-                      <span className="text-[9px] bg-[#242A35]/60 text-slate-400 font-bold px-3 py-1 rounded-full border border-slate-750/30 uppercase tracking-wider">
+                      <span className="text-[9px] bg-slate-200/80 dark:bg-[#242A35]/60 text-slate-600 dark:text-slate-400 font-bold px-3 py-1 rounded-full border border-slate-300 dark:border-slate-750/30 uppercase tracking-wider">
                         {getFriendlyDateLabel(msg.timestamp)}
                       </span>
                     </div>
@@ -427,15 +427,15 @@ const AIAssistant = () => {
                     className={`flex gap-2 max-w-[92%] ${isAssistant ? 'mr-auto text-left' : 'ml-auto flex-row-reverse text-right'}`}
                   >
                     {/* Avatar */}
-                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md ${isAssistant ? 'bg-primary text-black' : 'bg-slate-700 text-white'}`}>
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 shadow-md ${isAssistant ? 'bg-primary text-primary-foreground' : 'bg-slate-700 text-white'}`}>
                       {isAssistant ? <Bot className="w-4 h-4" /> : <User className="w-4 h-4" />}
                     </div>
 
                     {/* Message Bubble */}
                     <div className={`px-3 py-2 rounded-xl border flex flex-col ${
                       isAssistant 
-                      ? 'bg-[#20252E] border-slate-700/40 text-slate-100 rounded-tl-none' 
-                      : 'bg-primary/10 border-primary/20 text-slate-100 rounded-tr-none'
+                      ? 'bg-slate-100 dark:bg-[#20252E] border-slate-200 dark:border-slate-700/40 text-slate-800 dark:text-slate-100 rounded-tl-none' 
+                      : 'bg-primary/10 border-primary/20 text-slate-800 dark:text-slate-100 rounded-tr-none'
                     } shadow-sm`}>
                       <MarkdownText text={msg.content} />
                       
@@ -455,10 +455,10 @@ const AIAssistant = () => {
           {/* Typing Indicator */}
           {isLoading && (
             <div className="flex gap-2 max-w-[92%] mr-auto text-left items-center">
-              <div className="w-7 h-7 rounded-lg bg-primary text-black flex items-center justify-center flex-shrink-0 shadow-md">
+              <div className="w-7 h-7 rounded-lg bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0 shadow-md">
                 <Bot className="w-4 h-4" />
               </div>
-              <div className="px-3 py-2 rounded-xl border bg-[#20252E] border-slate-700/40 rounded-tl-none text-slate-400 flex items-center gap-1">
+              <div className="px-3 py-2 rounded-xl border bg-slate-100 dark:bg-[#20252E] border-slate-200 dark:border-slate-700/40 rounded-tl-none text-slate-500 dark:text-slate-400 flex items-center gap-1">
                 <span className="w-1 h-1 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: '0ms' }}></span>
                 <span className="w-1 h-1 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: '150ms' }}></span>
                 <span className="w-1 h-1 rounded-full bg-slate-400 animate-bounce" style={{ animationDelay: '300ms' }}></span>
@@ -470,7 +470,7 @@ const AIAssistant = () => {
         </div>
 
         {/* Bottom Panel (Chips & Input) */}
-        <div className="p-4 border-t border-border bg-[#181B21] flex flex-col gap-3">
+        <div className="p-4 border-t border-slate-200 dark:border-border bg-slate-50 dark:bg-[#181B21] flex flex-col gap-3">
           {/* Action Chips */}
           <div className="hidden lg:flex flex-wrap gap-2">
             {chips.map((chip, idx) => (
@@ -478,7 +478,7 @@ const AIAssistant = () => {
                 key={idx}
                 onClick={() => handleChipClick(chip)}
                 disabled={isLoading}
-                className="text-[11px] font-medium text-slate-400 hover:text-white bg-[#242A35]/60 hover:bg-[#2E3543] border border-slate-700/50 rounded-full px-3.5 py-1.5 transition-all duration-300 disabled:opacity-50"
+                className="text-[11px] font-medium text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white bg-slate-200/60 hover:bg-slate-300/80 dark:bg-[#242A35]/60 dark:hover:bg-[#2E3543] border border-slate-300/70 dark:border-slate-700/50 rounded-full px-3.5 py-1.5 transition-all duration-300 disabled:opacity-50"
               >
                 {chip}
               </button>
@@ -493,12 +493,12 @@ const AIAssistant = () => {
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Ask SolversAI..."
               disabled={isLoading}
-              className="flex-1 bg-[#1A1D24] text-xs text-white placeholder-slate-500 border border-slate-700/80 rounded-xl pl-4 pr-10 py-2.5 focus:border-primary focus:outline-none transition-all"
+              className="flex-1 bg-white dark:bg-[#1A1D24] text-xs text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 border border-slate-200 dark:border-slate-700/80 rounded-xl pl-4 pr-10 py-2.5 focus:border-primary focus:outline-none transition-all"
             />
             <button
               type="submit"
               disabled={isLoading || !inputText.trim()}
-              className="absolute right-1.5 top-1.5 bottom-1.5 aspect-square rounded-lg bg-primary text-black font-semibold hover:bg-[#d8e050] transition-colors disabled:opacity-30 flex items-center justify-center shadow-lg"
+              className="absolute right-1.5 top-1.5 bottom-1.5 aspect-square rounded-lg bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-all disabled:opacity-30 flex items-center justify-center shadow-lg"
             >
               <Send className="w-4 h-4" />
             </button>

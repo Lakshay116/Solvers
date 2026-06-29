@@ -6,8 +6,8 @@
   :root {
     --background: 210 20% 98%;
     --foreground: 222 18% 11%;
-    --primary: 60 90% 60%; /* Vibrant Lime/Yellow */
-    --primary-foreground: 222 18% 11%;
+    --primary: 243 75% 59%; /* Premium Royal Indigo */
+    --primary-foreground: 0 0% 100%; /* Contrast White */
     --surface: 0 0% 100%;
     --surface-foreground: 222 18% 11%;
     --border: 214 31.8% 91.4%;
